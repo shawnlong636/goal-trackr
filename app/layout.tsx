@@ -1,18 +1,26 @@
 import "@/styles/globals.css";
 import { Metadata } from "next";
-import { siteConfig } from "@/config/site";
-import { fontSans } from "@/config/fonts";
-import { Providers } from "./providers";
-import { Navbar } from "@/components/navbar";
+import { Providers } from "@/app/providers";
+import { Navbar } from "@/app/navbar";
+import { GithubIcon } from "@/components/icons";
 import { Link } from "@nextui-org/link";
 import clsx from "clsx";
 
+import { Fira_Code as FontMono, Inter as FontSans } from "next/font/google"
+
+const fontSans = FontSans({
+  subsets: ["latin"],
+  variable: "--font-sans",
+})
+
+const fontMono = FontMono({
+  subsets: ["latin"],
+  variable: "--font-mono",
+})
+
 export const metadata: Metadata = {
-	title: {
-		default: siteConfig.name,
-		template: `%s - ${siteConfig.name}`,
-	},
-	description: siteConfig.description,
+	title: 'Goal Trackr',
+	description: 'Track your goals and habits',
 	themeColor: [
 		{ media: "(prefers-color-scheme: light)", color: "white" },
 		{ media: "(prefers-color-scheme: dark)", color: "black" },
@@ -34,25 +42,30 @@ export default function RootLayout({
 			<head />
 			<body
 				className={clsx(
-					"min-h-screen bg-background font-sans antialiased",
+					"min-h-screen text-foreground font-sans antialiased light:bg-background dark:bg-gradient-to-br dark:from-background dark:to-slate-900",
 					fontSans.variable
 				)}
 			>
 				<Providers themeProps={{ attribute: "class", defaultTheme: "dark" }}>
 					<div className="relative flex flex-col h-screen">
 						<Navbar />
-						<main className="container mx-auto max-w-7xl pt-16 px-6 flex-grow">
+						<main className="container flex-grow px-6 pt-16 mx-auto max-w-7xl">
 							{children}
 						</main>
-						<footer className="w-full flex items-center justify-center py-3">
-							<Link
+						<footer className="flex items-center justify-center w-full py-3 gap-x-2">
+							<div className="flex items-center justify-center gap-2">
+								Created by 
+								<Link
 								isExternal
 								className="flex items-center gap-1 text-current"
-								href="https://nextui-docs-v2.vercel.app?utm_source=next-app-template"
+								href="https://www.linkedin.com/in/shawnlong636"
 								title="nextui.org homepage"
 							>
-								<span className="text-default-600">Powered by</span>
-								<p className="text-primary">NextUI</p>
+								<p className="text-primary">Shawn Long</p>
+							</Link>
+							</div>
+							<Link href="https://github.com/shawnlong636" target="__blank">
+								<GithubIcon size={24} className="text-gray-500"/>
 							</Link>
 						</footer>
 					</div>
